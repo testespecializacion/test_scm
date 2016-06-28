@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<p:breadCrumb>
+		<p:menuitem value="Menu"
+			url="http://localhost:8080/demoWeb/menu.xhtml" />
+		<p:menuitem value="Cliente"
+			url="http://localhost:8080/demoWeb/cliente.xhtml" />
+		<p:menuitem value="Usuario"
+			url="http://localhost:8080/demoWeb/usuario.xhtml" />
+		<p:menuitem value="Transacciones"
+			url="http://localhost:8080/demoWeb/transacciones.xhtml" />
+	</p:breadCrumb>
+	<br />
+	<br />
+
+	<h:form>
+		<p:growl id="msg" />
+		<p:panel header="Formulario Transacciones"
+			id="pnlFormularioTransaccion">
+			<h:panelGrid columns="2" border="0">
+				<p:outputLabel value="Id Cliente" />
+				<p:inputText id="txtCliente"
+					binding="#{transaccionesVista.txtCliente}">
+
+					<p:ajax listener="#{transaccionesVista.txtClienteListener}"
+						update="pnlFormularioTransaccion,msg" />
+				</p:inputText>
+
+				<p:outputLabel value="Numero de Cuenta" />
+				<p:inputText id="txtNumeroCuenta"
+					binding="#{transaccionesVista.txtNumeroCuenta}">
+					<p:ajax listener="#{transaccionesVista.txtCuentaListener}"
+						update="pnlFormularioTransaccion,msg" />
+				</p:inputText>
+
+				<p:outputLabel value="Usuario" />
+				<p:selectOneMenu id="somUsuario"
+					binding="#{transaccionesVista.somUsuario}">
+					<f:selectItem itemValue="-1" itemLabel="-SELECCIONE-" />
+					<f:selectItems value="#{transaccionesVista.losUsuarios}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Valor" />
+				<p:inputText type="number" converter="javax.faces.BigDecimal"
+					id="txtValor" binding="#{transaccionesVista.txtValor}"
+					converterMessage="Por favor digite numeros unicamente en el campo valor."
+					symbol="$ " />
+			</h:panelGrid>
+			
+			<h:panelGrid columns="4" border="0">
+				<p:commandButton id="btnConsignar" value="Consignar" update="msg"
+					binding="#{transaccionesVista.btnConsignar}" disabled="true"
+					action="#{transaccionesVista.consignarAction}" />
+				<p:commandButton id="btnRetirar" value="Retiro" update="msg"
+					binding="#{transaccionesVista.btnRetirar}" disabled="true"
+					action="#{transaccionesVista.retirarAction}" />
+				<p:commandButton id="btnLimpiar" value="Limpiar"
+					update="pnlFormularioTransaccion,msg"
+					binding="#{transaccionesVista.btnLimpiar}" disabled="false"
+					action="#{transaccionesVista.limpiarAction}" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
